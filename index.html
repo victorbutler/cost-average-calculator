@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Cost Averaging Calculator</title>
+    <meta name="author" content="Victor Butler">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  </head>
+  <body class="">
+    <div id="app" class="m-2">
+      <h1 class="text-center m-3 mb-5">Cost Average Calculator</h1>
+      <h2>Starting with...</h2>
+      <div class="row mt-5 mb-5">
+        <div class="col-sm-3">
+          <div class="row">
+            <label for="initial-amount" class="h5 col text-right">Coin Amount</label>
+            <input type="text" class="col" name="initial-amount" id="initial-amount" size="12" />
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="row">
+            <label for="initial-price" class="h5 col text-right">Coin Price</label>
+            <input type="text" class="col" name="initial-price" id="initial-price" size="12" />
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="row">
+            <label for="projected-profit" class="h5 col text-right">Projected Profit</label>
+            <div class="col-sm-4 input-group">
+              <input type="text" class="form-control" name="projected-profit" id="projected-profit" size="3" />
+              <div class="input-group-append">
+                <span class="input-group-text">%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+
+        </div>
+      </div>
+      <h2>Cost Average Levels</h2>
+      <div class="row mt-4">
+        <div class="col-sm-12">
+          <label for="levels" class="h5">Levels</label>
+          <select name="levels" id="levels">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+          </select>
+        </div>
+      </div>
+      <table class="table cost-averaging-results mt-5">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Coins to buy</th>
+            <th scope="col">Price of coins</th>
+            <th scope="col">Average Price</th>
+            <th scope="col">Sell Price</th>
+            <th scope="col">Profit</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+    <!-- #PLUGINS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/big.js/5.0.3/big.min.js"></script>
+    <script type="text/javascript">
+      $(function() {
+        var levelsHandler = function(e) {
+          var levels = parseInt($('#levels').val());
+          var levelsShown = $('table.cost-averaging-results tbody tr').length;
+          var table = $('table.cost-averaging-results tbody');
+          if (levels > levelsShown) {
+            for (var i = levelsShown; i < levels; i++) {
+              var tr = $('<tr />');
+              tr.append('<th scope="row">' + (i + 1) + '</th>');
+              var ca = $('<input type="text" size="12" />');
+              ca.attr('name', 'coin-amount-' + (i + 1));
+              tr.append($('<td />').append(ca));
+              var cs = $('<input type="text" size="12" />');
+              cs.attr('name', 'coin-price-' + (i + 1));
+              tr.append($('<td />').append(cs));
+              tr.append($('<td class="h5 text-primary average-price" />'));
+              tr.append($('<td class="h5 text-info sell-price" />'));
+              tr.append($('<td class="h5 text-success profit" />'));
+              table.append(tr);
+            }
+          } else if (levels < levelsShown) {
+            var rows = $('table.cost-averaging-results tbody tr');
+            for (var i = rows.length; i > levels; i--) {
+              rows.filter(':eq(' + (i - 1) + ')').remove();
+            }
+          }
+        };
+        $('#levels').on('change', levelsHandler);
+        var calculate = function() {
+          try {
+            var coinsHeld = Big($('#initial-amount').val());
+            var coinPrice = Big($('#initial-price').val());
+            var profitRate = Big($('#projected-profit').val()).div(100);
+            var averagePrice = coinPrice; // initially, avg price is initial price
+            var rows = $('table.cost-averaging-results tbody tr');
+            $('table.cost-averaging-results tbody tr').each(function(i, elm) {
+              var $elm = $(elm);
+                var coinAmount = Big($elm.find('input[name="coin-amount-' + (i + 1) + '"]').val());
+                var coinPrice = Big($elm.find('input[name="coin-price-' + (i + 1) + '"]').val());
+                //if (coinAmount.length && coinPrice.length) {
+                  var newAveragePrice = averagePrice.times(coinsHeld).plus(coinPrice.times(coinAmount)).div(coinsHeld.plus(coinAmount));
+                  var newSellPrice = newAveragePrice.times(profitRate.plus(1));
+                  $elm.find('.average-price').text(newAveragePrice.round(8).toString());
+                  $elm.find('.sell-price').text(newSellPrice.round(8).toString());
+                  averagePrice = newAveragePrice;
+                  coinsHeld = coinsHeld.plus(coinAmount);
+                  $elm.find('.profit').text(coinsHeld.times(averagePrice).times(profitRate).round(8).toString());
+                //}
+            });
+          } catch (e) {
+          }
+        };
+        $(document).on('change', 'input[type="text"]', function(e) {
+          calculate();
+        });
+        levelsHandler();
+      });
+    </script>
+  </body>
+</html>
