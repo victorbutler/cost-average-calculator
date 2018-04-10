@@ -79,6 +79,8 @@
     </div>
     <!-- #PLUGINS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/big.js/5.0.3/big.min.js"></script>
     <script type="text/javascript">
       $(function() {
@@ -124,7 +126,7 @@
                   var newAveragePrice = averagePrice.times(coinsHeld).plus(coinPrice.times(coinAmount)).div(coinsHeld.plus(coinAmount));
                   var newSellPrice = newAveragePrice.times(profitRate.plus(1));
                   $elm.find('.average-price').text(newAveragePrice.round(8).toString());
-                  $elm.find('.sell-price').text(newSellPrice.round(8).toString());
+                  $elm.find('.sell-price').text(newSellPrice.round(8).toString()).append(' <span data-toggle="tooltip" data-placement="top" title="' + newSellPrice.div(coinPrice).minus(1).times(100).toFixed(2).toString() + '% of Price of coins"><img class="va-top" src="question.svg" alt="Question" height="22" width="22"></span>').find('span').tooltip();
                   averagePrice = newAveragePrice;
                   coinsHeld = coinsHeld.plus(coinAmount);
                   $elm.find('.profit').text(coinsHeld.times(averagePrice).times(profitRate).round(8).toString());
@@ -139,5 +141,10 @@
         levelsHandler();
       });
     </script>
+    <style>
+      img.va-top {
+        vertical-align: top;
+      }
+    </style>
   </body>
 </html>
