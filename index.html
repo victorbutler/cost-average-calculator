@@ -11,71 +11,96 @@
     <div id="app" class="m-2">
       <h1 class="text-center m-3 mb-5">Cost Average Calculator</h1>
       <h2>Starting with...</h2>
-      <div class="row mt-5 mb-5">
-        <div class="col-sm-3">
-          <div class="row">
-            <label for="initial-amount" class="h5 col text-right">Coin Amount</label>
-            <input type="text" class="col" name="initial-amount" id="initial-amount" size="12" />
+      <form>
+        <div class="row mt-5 mb-5">
+          <div class="col-sm-3">
+            <div class="row">
+              <label for="initial-amount" class="h5 col text-right">Coin Amount</label>
+              <input type="text" class="col" name="initial-amount" id="initial-amount" size="12" />
+            </div>
           </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="row">
-            <label for="initial-price" class="h5 col text-right">Coin Price</label>
-            <input type="text" class="col" name="initial-price" id="initial-price" size="12" />
+          <div class="col-sm-3">
+            <div class="row">
+              <label for="initial-price" class="h5 col text-right">Coin Price</label>
+              <input type="text" class="col" name="initial-price" id="initial-price" size="12" />
+            </div>
           </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="row">
-            <label for="projected-profit" class="h5 col text-right">Projected Profit</label>
-            <div class="col-sm-4 input-group">
-              <input type="text" class="form-control" name="projected-profit" id="projected-profit" size="3" />
-              <div class="input-group-append">
-                <span class="input-group-text">%</span>
+          <div class="col-sm-4">
+            <div class="row">
+              <label for="projected-profit" class="h5 col text-right">Projected Profit</label>
+              <div class="col-sm-4 input-group">
+                <input type="text" class="form-control" name="projected-profit" id="projected-profit" size="3" />
+                <div class="input-group-append">
+                  <span class="input-group-text">%</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="col-sm-2">
+          <div class="col-sm-2">
 
+          </div>
+        </div>
+        <h2>Cost Average Levels</h2>
+        <div class="row mt-4">
+          <div class="col-sm-12">
+            <label for="levels" class="h5">Levels</label>
+            <select name="levels" id="levels">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+              <option value="13">13</option>
+              <option value="14">14</option>
+              <option value="15">15</option>
+            </select>
+          </div>
+        </div>
+        <table class="table cost-averaging-results mt-5">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Coins to buy</th>
+              <th scope="col">Price of coins</th>
+              <th scope="col">Average Price</th>
+              <th scope="col">Sell Price</th>
+              <th scope="col">Profit</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </form>
+      <div class="row">
+        <div class="col-sm-6 alert alert-danger" role="alert" style="display: none;">
+          Fill out the form and enter a name to save the data as.
         </div>
       </div>
-      <h2>Cost Average Levels</h2>
-      <div class="row mt-4">
-        <div class="col-sm-12">
-          <label for="levels" class="h5">Levels</label>
-          <select name="levels" id="levels">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-            <option value="13">13</option>
-            <option value="14">14</option>
-            <option value="15">15</option>
-          </select>
+      <div class="row">
+        <div class="col-sm-3">
+          <input type="text" class="col" name="save-name" id="save-name" placeholder="Data Set Name" />
+        </div>
+        <div class="col-sm-9">
+          <button id="save-button" name="save-button" type="button" class="btn btn-primary">Save Data Set</button>
         </div>
       </div>
-      <table class="table cost-averaging-results mt-5">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Coins to buy</th>
-            <th scope="col">Price of coins</th>
-            <th scope="col">Average Price</th>
-            <th scope="col">Sell Price</th>
-            <th scope="col">Profit</th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
+      <div class="row mt-3">
+        <div class="col-sm-3 text-right">
+          <label for="data-sets-list">Saved Data Sets</label>
+          <select name="data-sets-list" id="data-sets-list"></select>
+        </div>
+        <div class="col-sm-9">
+          <button id="load-data-set" name="load-data-set" type="button" class="btn btn-secondary">Load Data Set</button>
+          <button id="delete-data-set" name="delete-data-set" type="button" class="btn btn-danger">Delete Data Set</button>
+        </div>
+      </div>
     </div>
     <!-- #PLUGINS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -84,6 +109,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/big.js/5.0.3/big.min.js"></script>
     <script type="text/javascript">
       $(function() {
+        $('form').on('submit', function(e) {e.preventDefault();});
         var levelsHandler = function(e) {
           var levels = parseInt($('#levels').val());
           var levelsShown = $('table.cost-averaging-results tbody tr').length;
@@ -135,10 +161,133 @@
           } catch (e) {
           }
         };
+        var captureFormState = function() {
+          var data = {
+            'name': $('#save-name').val(),
+            'initial-amount': $('#initial-amount').val(),
+            'initial-price': $('#initial-price').val(),
+            'projected-profit': $('#projected-profit').val(),
+            'levels': $('#levels').val()
+          };
+          var levelsData = [];
+          for (var i = 1; i <= parseInt(data.levels); i++) {
+            levelsData.push({
+              'coin-amount': $('input[name="coin-amount-' + i + '"]').val(),
+              'coin-price': $('input[name="coin-price-' + i + '"]').val()
+            });
+          }
+          data.levelsData = levelsData;
+          return data;
+        };
+        var loadDataSets = function() {
+          var dataSetNames = localStorage.getItem('mySaveNames');
+          if (dataSetNames === null) {
+            dataSetNames = [];
+          } else {
+            dataSetNames = JSON.parse(dataSetNames);
+          }
+          $('select#data-sets-list').empty();
+          $('select#data-sets-list').append('<option value="">New</option>');
+          for (var i = 0; i < dataSetNames.length; i++) {
+            $('select#data-sets-list').append('<option value="' + dataSetNames[i] + '">' + dataSetNames[i] + '</option>');
+          }
+        };
+        var saveDataSet = function(saveName) {
+          if (saveName.length === 0) {
+            $('div.alert').text('Please enter a name for this save').show();
+          } else {
+            $('div.alert').hide();
+          }
+          var state = captureFormState();
+          try {
+            var mySaves = localStorage.getItem('mySaves');
+            var mySaveNames = localStorage.getItem('mySaveNames');
+            if (mySaves === null) {
+              mySaves = {};
+            } else {
+              mySaves = JSON.parse(mySaves);
+            }
+            if (mySaveNames === null) {
+              mySaveNames = [];
+            } else {
+              mySaveNames = JSON.parse(mySaveNames);
+            }
+            mySaves[saveName] = state;
+            mySaveNames.push(saveName);
+            localStorage.setItem('mySaves', JSON.stringify(mySaves));
+            localStorage.setItem('mySaveNames', JSON.stringify(mySaveNames));
+            loadDataSets();
+          } catch (e) {
+            $('div.alert').text(e.message).show();
+          }
+        };
+        $('#save-button').on('click', function(e) {
+          var saveName = $('#save-name').val();
+          saveDataSet(saveName);
+        });
+        var loadDataSet = function(saveName) {
+          var mySaves = localStorage.getItem('mySaves');
+          if (mySaves === null) {
+            mySaves = {};
+          } else {
+            mySaves = JSON.parse(mySaves);
+          }
+          var mySave = mySaves[saveName];
+          if (typeof mySave !== 'undefined') {
+            $('#initial-amount').val(mySave['initial-amount']);
+            $('#initial-price').val(mySave['initial-price']);
+            $('#projected-profit').val(mySave['projected-profit']);
+            $('#levels').val(mySave['levels']);
+            levelsHandler();
+            for (var i = 0; i < parseInt(mySave['levels']); i++) {
+              $('input[name="coin-amount-' + (i + 1) + '"]').val(mySave['levelsData'][i]['coin-amount']);
+              $('input[name="coin-price-' + (i + 1) + '"]').val(mySave['levelsData'][i]['coin-price']);
+            }
+          } else {
+            $('#initial-amount').val('');
+            $('#initial-price').val('');
+            $('#projected-profit').val('');
+            $('#levels').val(1);
+          }
+          levelsHandler();
+          calculate();
+        };
+        var deleteDataSet = function(saveName) {
+          var mySaves = localStorage.getItem('mySaves');
+          var mySaveNames = localStorage.getItem('mySaveNames');
+          if (mySaves === null) {
+            mySaves = {};
+          } else {
+            mySaves = JSON.parse(mySaves);
+          }
+          if (mySaveNames === null) {
+            mySaveNames = [];
+          } else {
+            mySaveNames = JSON.parse(mySaveNames);
+          }
+          if (typeof mySaves[saveName] !== 'undefined') {
+            delete mySaves[saveName];
+          }
+          if (mySaveNames.indexOf(saveName) > -1) {
+            mySaveNames.splice(mySaveNames.indexOf(saveName), 1)
+          }
+          localStorage.setItem('mySaves', JSON.stringify(mySaves));
+          localStorage.setItem('mySaveNames', JSON.stringify(mySaveNames));
+          loadDataSets();
+        };
+        $('#load-data-set').on('click', function(e) {
+          var saveName = $('select#data-sets-list').val();
+          loadDataSet(saveName);
+        });
+        $('#delete-data-set').on('click', function(e) {
+          var saveName = $('select#data-sets-list').val();
+          deleteDataSet(saveName);
+        });
         $(document).on('change', 'input[type="text"]', function(e) {
           calculate();
         });
         levelsHandler();
+        loadDataSets();
       });
     </script>
     <style>
