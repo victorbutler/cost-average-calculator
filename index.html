@@ -8,18 +8,25 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   </head>
   <body class="">
-    <div id="app" class="m-2">
-      <h1 class="text-center m-3 mb-5">Cost Average Calculator</h1>
-      <h2>Starting with...</h2>
+    <div id="app" class="container">
+      <div class="row mt-2 mb-5">
+        <h1 class="col-sm-12 text-center">Cost Average Calculator</h1>
+      </div>
+      <div class="row">
+        <h2 class="col-sm-4">Starting with...</h2>
+        <div class="col-sm-1 ml-auto">
+          <a href="#data-sets-modal" data-toggle="modal" data-target="#data-sets-modal"><img src="icons/gear.svg" width="30" height="30" alt="Configure"></a>
+        </div>
+      </div>
       <form>
         <div class="row mt-5 mb-5">
-          <div class="col-sm-3">
+          <div class="col-sm-4">
             <div class="row">
               <label for="initial-amount" class="h5 col text-right">Coin Amount</label>
               <input type="text" class="col" name="initial-amount" id="initial-amount" size="12" />
             </div>
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-4">
             <div class="row">
               <label for="initial-price" class="h5 col text-right">Coin Price</label>
               <input type="text" class="col" name="initial-price" id="initial-price" size="12" />
@@ -36,11 +43,10 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-2">
-
-          </div>
         </div>
-        <h2>Cost Average Levels</h2>
+        <div class="row col-sm-4">
+          <h2>Cost Average Levels</h2>
+        </div>
         <div class="row mt-4">
           <div class="col-sm-12">
             <label for="levels" class="h5">Levels</label>
@@ -78,27 +84,45 @@
           </tbody>
         </table>
       </form>
-      <div class="row">
-        <div class="col-sm-6 alert alert-danger" role="alert" style="display: none;">
-          Fill out the form and enter a name to save the data as.
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-3">
-          <input type="text" class="col" name="save-name" id="save-name" placeholder="Data Set Name" />
-        </div>
-        <div class="col-sm-9">
-          <button id="save-button" name="save-button" type="button" class="btn btn-primary">Save Data Set</button>
-        </div>
-      </div>
-      <div class="row mt-3">
-        <div class="col-sm-3 text-right">
-          <label for="data-sets-list">Saved Data Sets</label>
-          <select name="data-sets-list" id="data-sets-list"></select>
-        </div>
-        <div class="col-sm-9">
-          <button id="load-data-set" name="load-data-set" type="button" class="btn btn-secondary">Load Data Set</button>
-          <button id="delete-data-set" name="delete-data-set" type="button" class="btn btn-danger">Delete Data Set</button>
+      <div id="data-sets-modal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Data Sets</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-sm-12 alert alert-danger" role="alert" style="display: none;">
+                  Fill out the form and enter a name to save the data as.
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-8">
+                  <input type="text" class="col" name="save-name" id="save-name" placeholder="Data Set Name" />
+                </div>
+                <div class="col-sm-2">
+                  <button id="save-button" name="save-button" type="button" class="btn btn-primary">Save</button>
+                </div>
+              </div>
+              <hr />
+              <div class="row mt-3">
+                <div class="col-sm-6 text-right">
+                  <label for="data-sets-list">Saved Data Sets</label>
+                  <select name="data-sets-list" id="data-sets-list"></select>
+                </div>
+                <div class="col-sm-6">
+                  <button id="load-data-set" name="load-data-set" type="button" class="btn btn-secondary">Load</button>
+                  <button id="delete-data-set" name="delete-data-set" type="button" class="btn btn-danger">Delete</button>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -152,7 +176,7 @@
                   var newAveragePrice = averagePrice.times(coinsHeld).plus(coinPrice.times(coinAmount)).div(coinsHeld.plus(coinAmount));
                   var newSellPrice = newAveragePrice.times(profitRate.plus(1));
                   $elm.find('.average-price').text(newAveragePrice.round(8).toString());
-                  $elm.find('.sell-price').text(newSellPrice.round(8).toString()).append(' <span data-toggle="tooltip" data-placement="top" title="' + newSellPrice.round(8).div(coinPrice).minus(1).times(100).round(2).toString() + '% of Price of coins"><img class="va-top" src="question.svg" alt="Question" height="22" width="22"></span>').find('span').tooltip();
+                  $elm.find('.sell-price').text(newSellPrice.round(8).toString()).append(' <span data-toggle="tooltip" data-placement="top" title="' + newSellPrice.round(8).div(coinPrice).minus(1).times(100).round(2).toString() + '% of Price of coins"><img class="va-top" src="icons/question.svg" alt="Question" height="22" width="22"></span>').find('span').tooltip();
                   averagePrice = newAveragePrice;
                   coinsHeld = coinsHeld.plus(coinAmount);
                   $elm.find('.profit').text(coinsHeld.times(averagePrice).times(profitRate).round(8).toString());
