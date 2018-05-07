@@ -248,7 +248,9 @@
               mySaveNames = JSON.parse(mySaveNames);
             }
             mySaves[saveName] = state;
-            mySaveNames.push(saveName);
+            if (mySaveNames.indexOf(saveName) === -1) {
+              mySaveNames.push(saveName);
+            }
             localStorage.setItem('mySaves', JSON.stringify(mySaves));
             localStorage.setItem('mySaveNames', JSON.stringify(mySaveNames));
             loadDataSets();
