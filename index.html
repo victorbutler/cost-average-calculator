@@ -82,6 +82,8 @@
           </thead>
           <tbody>
           </tbody>
+          <tfoot>
+          </tfoot>
         </table>
       </form>
       <div id="data-sets-modal" class="modal" tabindex="-1" role="dialog">
@@ -193,7 +195,14 @@
                   $elm.find('.profit').text(coinsHeld.times(averagePrice).times(profitRate).round(8).toString());
                 //}
             });
+            if (!coinsHeld.eq(Big($('#initial-amount').val())) && !coinsHeld.eq(0)) {
+              var totalTr = $('<tr><th scope="row">Total</th><td colspan="5">' + coinsHeld + ' Coins</td></tr>');
+              $('table.cost-averaging-results tfoot').empty().append(totalTr);
+            } else {
+              $('table.cost-averaging-results tfoot').empty();
+            }
           } catch (e) {
+            $('table.cost-averaging-results tfoot').empty();
           }
         };
         var captureFormState = function() {
